@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PersonnelController;
 use App\Http\Controllers\Api\ResultatExamenController;
 use App\Http\Controllers\Api\TechnicienController;
 use App\Http\Controllers\Api\TraitementController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 //Inscrire un nouveau patient
 Route::post('/enregistrerpatient', [DossierPatientController::class,'enregistrerpatient']);
 
+
+//Information sur l'admin
+Route::post('/informationadmin', [UserController::class,'informationuser']);
 
 //Information sur les examens complet
 Route::post('/informationexamencomplet', [ExamenCompletController::class,'informationexamencomplet']);
