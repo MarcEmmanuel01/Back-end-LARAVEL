@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InformationAccouchement;
 use App\Models\Accouchement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccouchementController extends Controller
 {
@@ -20,5 +21,18 @@ class AccouchementController extends Controller
 
        $accouchement -> save ();
       }
+
+      public function recup_info_accou()
+      {
+
+
+          $accouchements = DB::table('accouchements')
+                      ->join('techniciens', 'accouchements.id', '=', 'techniciens.id')
+                      ->select('accouchements.*', 'techniciens.*')
+                      ->join('consultations', 'accouchements.id', '=', 'consultations.id')
+                      ->select('accouchements.*', 'consultations.*')
+                      ->get();
+          return $accouchements;
+        }
 }
 

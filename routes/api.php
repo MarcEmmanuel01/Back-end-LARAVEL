@@ -69,6 +69,10 @@ Route::post('/informationresultatexamen', [ResultatExamenController::class,'info
 Route::get('/recuperationlit', [LitController::class,'recup_info_lit']);
 
 
+//Recupperation sur les informations sur l'accouchement
+Route::get('/recuperationaccouchement', [AccouchementController::class,'recup_info_accou']);
+
+
 
 
 
