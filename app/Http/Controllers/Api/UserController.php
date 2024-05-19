@@ -20,6 +20,41 @@ class UserController extends Controller
        $user -> save ();
       }
 
+      // Mettre à jour un utilisateur
+    public function updateuser(Request $request, $id)
+    {
+        $user = User::find($id);
 
+        if (!$user) {
+            return response()->json(['message' => 'Utilisateur non trouvé'], 404);
+        }
+
+        $user->name_user = $request->input('name_user');
+        $user->email_user = $request->input('email_user');
+        if ($request->has('password_user')) {
+            $user->password_user = bcrypt($request->input('password_user')); // Assurez-vous de hasher le mot de passe
+        }
+
+        $user->save();
+
+        return response()->json(['message' => 'Utilisateur mis à jour avec succès'], 200);
+    }
+
+    // Supprimer un utilisateur
+    public function deleteuser($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Utilisateur non trouvé'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'Utilisateur supprimé avec succès'], 200);
+    }
 }
+
+
+
 

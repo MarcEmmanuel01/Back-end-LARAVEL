@@ -31,46 +31,166 @@ use Illuminate\Support\Facades\Route;
 //Inscrire un nouveau patient
 Route::post('/enregistrerpatient', [DossierPatientController::class,'enregistrerpatient']);
 
+// Mettre à jour un patient
+Route::put('/mettreajourpatient/{id}', [DossierPatientController::class, 'updatepatient']);
 
-//Information sur l'admin
+// Supprimer un patient
+Route::delete('/supprimerpatient/{id}', [DossierPatientController::class, 'deletepatient']);
+
+
+
+
+//Information sur un administrateur
 Route::post('/informationadmin', [UserController::class,'informationuser']);
+
+// Mettre à jour un administrateur
+Route::put('/mettreajouradmin/{id}', [UserController::class, 'updateuser']);
+
+// Supprimer un administrateur
+Route::delete('/supprimeradmin/{id}', [UserController::class, 'deleteuser']);
+
+
+
 
 //Information sur les examens complet
 Route::post('/informationexamencomplet', [ExamenCompletController::class,'informationexamencomplet']);
 
+// Mettre à jour un examen complet
+Route::put('/mettreajourcompletexamen/{id}', [ExamenCompletController::class, 'updatecompletexamen']);
+
+// Supprimer un examen complet
+Route::delete('/supprimercompletexamen/{id}', [ExamenCompletController::class, 'deletecompletexamen']);
+
+
+
+
 //Information sur les chambres
 Route::post('/informationchambre', [ChambreController::class,'informationchambre']);
+
+// Mettre à jour une chambre
+Route::put('/mettreajourchambre/{id}', [ChambreController::class, 'updatechambre']);
+
+// Supprimer une chambre
+Route::delete('/supprimerchambre/{id}', [ChambreController::class, 'deletechambre']);
+
+
+
 
 //Information sur les lits
 Route::post('/informationlit', [LitController::class,'informationlit']);
 
+//Recuperation sur les informations du lit et de la chambre
+Route::get('/recuperationlit/{id}', [LitController::class, 'recup_info_lit']);
+
+// Mettre à jour un lit
+Route::put('/mettreajourlit/{id}', [LitController::class, 'updatelit']);
+
+// Supprimer un lit
+Route::delete('/supprimerlit/{id}', [LitController::class, 'deletelit']);
+
+
+
+
+
 //Information sur les medecins
 Route::post('/informationmedecin', [MedecinController::class,'informationmedecin']);
+
+// Mettre à jour un médecin
+Route::put('/mettreajourmedecin/{id}', [MedecinController::class, 'updatemedecin']);
+
+// Supprimer un médecin
+Route::delete('/supprimermedecin/{id}', [MedecinController::class, 'deletemedecin']);
+
+
+
 
 //Information sur les techniciens
 Route::post('/informationtechnicien', [TechnicienController::class,'informationtechnicien']);
 
-//Enregistrer une nouveau consultation
+// Mettre à jour un technicien
+Route::put('/mettreajourtechnicien/{id}', [TechnicienController::class, 'updatetechnicien']);
+
+// Supprimer un technicien
+Route::delete('/supprimertechnicien/{id}', [TechnicienController::class, 'deletetechnicien']);
+
+
+
+
+//Enregistrer une nouvelle consultation
 Route::post('/enregistrerconsultation', [ConsultationController::class,'enregistrerconsultation']);
+
+// Récupérer les informations des consultations
+Route::get('/recuperationconsultation/{id}', [ConsultationController::class, 'recup_info_consultation']);
+
+// Mettre à jour une consultation
+Route::put('/mettreajourconsultation/{id}', [ConsultationController::class, 'updateconsultation']);
+
+// Supprimer une consultation
+Route::delete('/supprimerconsultation/{id}', [ConsultationController::class, 'deleteconsultation']);
+
+
+
+
 
 //Information sur les accouchements
 Route::post('/informationaccouchement', [AccouchementController::class,'informationaccouchement']);
 
+// Mettre à jour un accouchement
+Route::put('/mettreajouraccouchement/{id}', [AccouchementController::class, 'updateaccouchement']);
+
+// Supprimer un accouchement
+Route::delete('/supprimeraccouchement/{id}', [AccouchementController::class, 'deleteaccouchement']);
+
+//Recupperation sur les informations sur l'accouchement
+Route::get('/recuperationaccouchement/{id}', [AccouchementController::class,'recup_info_accou']);
+
+
+
+
 //Information sur les traitements
 Route::post('/informationtraitement', [TraitementController::class,'informationtraitement']);
 
-//Information sur les hospitalistions
+// recuperation d'un traitement
+Route::get('/recuperationtraitement/{id}', [TraitementController::class, 'recup_info_traitement']);
+
+// Mettre à jour un traitement
+Route::put('/mettreajourtraitement/{id}', [TraitementController::class, 'updatetraitement']);
+
+// Supprimer un traitement
+Route::delete('/supprimertraitement/{id}', [TraitementController::class, 'deletetraitement']);
+
+
+
+
+//Information sur les hospitalisations
 Route::post('/informationhospitalisation', [HospitalisationController::class,'informationhospitalisation']);
+
+// recuperation d'une hospitalisation
+Route::get('/recuperationhospitalisation/{id}', [HospitalisationController::class, 'recup_info_hospitalisation']);
+
+// Mettre à jour une hospitalisation
+Route::put('/mettreajourhospitalisation/{id}', [HospitalisationController::class, 'updatehospitalisation']);
+
+// Supprimer une hospitalisation
+Route::delete('/supprimerhospitalisation/{id}', [HospitalisationController::class, 'deletehospitalisation']);
+
+
+
+
 
 //Information sur les resultats des examens
 Route::post('/informationresultatexamen', [ResultatExamenController::class,'informationresultatexamen']);
 
-//Recupperation sur les informations du lit et de la chambre
-Route::get('/recuperationlit', [LitController::class,'recup_info_lit']);
+// recuperation de resultat des examens
+Route::get('/recuperationresultatexamen/{id}', [ResultatExamenController::class, 'recup_info_resultatexamen']);
+
+// Mettre à jour un résultat d'examen
+Route::put('/mettreajourresultatexamen/{id}', [ResultatExamenController::class, 'updateresultatexamen']);
+
+// Supprimer un résultat d'examen
+Route::delete('/supprimerresultatexamen/{id}', [ResultatExamenController::class, 'deleteresultatexamen']);
 
 
-//Recupperation sur les informations sur l'accouchement
-Route::get('/recuperationaccouchement', [AccouchementController::class,'recup_info_accou']);
 
 
 

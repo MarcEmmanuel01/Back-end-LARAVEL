@@ -18,5 +18,37 @@ class ExamenCompletController extends Controller
 
     }
 
+    // Mettre à jour un examen complet
+    public function updatecompletexamen(Request $request, $id)
+    {
+        $examen_complet = Examen_complet::find($id);
+
+        if (!$examen_complet) {
+            return response()->json(['message' => 'Examen complet non trouvé'], 404);
+        }
+
+        $examen_complet->libelle_exam = $request->input('libelle_exam');
+        // Ajouter d'autres champs si nécessaire
+
+        $examen_complet->save();
+
+        return response()->json(['message' => 'Examen complet mis à jour avec succès'], 200);
+    }
+
+    // Supprimer un examen complet
+    public function deletecompletexamen($id)
+    {
+        $examen_complet = Examen_complet::find($id);
+
+        if (!$examen_complet) {
+            return response()->json(['message' => 'Examen complet non trouvé'], 404);
+        }
+
+        $examen_complet->delete();
+
+        return response()->json(['message' => 'Examen complet supprimé avec succès'], 200);
+    }
 }
+
+
 

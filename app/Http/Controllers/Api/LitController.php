@@ -19,15 +19,41 @@ class LitController extends Controller
      $lit -> save ();
     }
 
-    public function recup_info_lit()
+    public function recup_info_lit($id)
     {
+        $lit = Lit::find($id);
+        if ($lit) {
+            return response()->json($lit);
+        } else {
+            return response()->json(['message' => 'Lit existe pas'], 404);
+        }
+    }
 
+    public function updatelit(Request $request, $id)
+    {
+        $lit = Lit::find($id);
+        if ($lit) {
+            $lit->description_lit = $request->description_lit;
+            $lit->id_chambre = $request->id_chambre;
 
-        $lits = DB::table('lits')
-                    ->join('chambres', 'lits.id', '=', 'chambres.id')
-                    ->select('lits.*', 'chambres.*')
-                    ->get();
-        return $lits;
-      }
+            $lit->save();
+            return response()->json(['message' => 'Lit updated successfully']);
+        } else {
+            return response()->json(['message' => 'Lit not found'], 404);
+        }
+    }
+
+    public function deletelit($id)
+    {
+        $lit = Lit::find($id);
+        if ($lit) {
+            $lit->delete();
+            return response()->json(['message' => 'Lit deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Lit not found'], 404);
+        }
+    }
 
 }
+
+
