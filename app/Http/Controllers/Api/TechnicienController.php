@@ -38,9 +38,9 @@ class TechnicienController extends Controller
               $technicien->compte_banquaire_tech = $request->compte_banquaire_tech;
 
               $technicien->save();
-              return response()->json(['message' => 'Technicien updated successfully']);
+              return response()->json(['message' => 'Technicien a ete mis a jour avec succes']);
           } else {
-              return response()->json(['message' => 'Technicien not found'], 404);
+              return response()->json(['message' => 'Technicien existe pas'], 404);
           }
       }
 
@@ -49,9 +49,9 @@ class TechnicienController extends Controller
           $technicien = Technicien::find($id);
           if ($technicien) {
               $technicien->delete();
-              return response()->json(['message' => 'Technicien deleted successfully']);
+              return response()->json(['message' => 'Technicien a ete mis a jour avec succes']);
           } else {
-              return response()->json(['message' => 'Technicien not found'], 404);
+              return response()->json(['message' => 'Technicien existe pas'], 404);
           }
       }
 

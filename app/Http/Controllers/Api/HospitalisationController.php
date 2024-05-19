@@ -49,9 +49,9 @@ class HospitalisationController extends Controller
               $hospitalisation->id_consultation = $request->id_consultation;
 
               $hospitalisation->save();
-              return response()->json(['message' => 'Hospitalisation updated successfully']);
+              return response()->json(['message' => 'Hospitalisation a ete mis a joue avec succes']);
           } else {
-              return response()->json(['message' => 'Hospitalisation not found'], 404);
+              return response()->json(['message' => 'Hospitalisation existe pas'], 404);
           }
       }
 
@@ -60,9 +60,9 @@ class HospitalisationController extends Controller
           $hospitalisation = Hospitalisation::find($id);
           if ($hospitalisation) {
               $hospitalisation->delete();
-              return response()->json(['message' => 'Hospitalisation deleted successfully']);
+              return response()->json(['message' => 'Hospitalisation a ete supprimer avec succes']);
           } else {
-              return response()->json(['message' => 'Hospitalisation not found'], 404);
+              return response()->json(['message' => 'Hospitalisation existe pas'], 404);
           }
       }
 

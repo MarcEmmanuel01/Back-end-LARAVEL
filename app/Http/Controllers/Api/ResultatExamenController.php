@@ -51,9 +51,9 @@ class ResultatExamenController extends Controller
               $resultatexamen->id_examen_complet = $request->id_examen_complet;
 
               $resultatexamen->save();
-              return response()->json(['message' => 'Resultat examen updated successfully']);
+              return response()->json(['message' => 'Resultat examen a ete mis a jour avec succes']);
           } else {
-              return response()->json(['message' => 'Resultat examen not found'], 404);
+              return response()->json(['message' => 'Resultat examen existe pas'], 404);
           }
       }
 
@@ -62,9 +62,9 @@ class ResultatExamenController extends Controller
           $resultatexamen = Resultat_examen::find($id);
           if ($resultatexamen) {
               $resultatexamen->delete();
-              return response()->json(['message' => 'Resultat examen deleted successfully']);
+              return response()->json(['message' => 'Resultat examen a ete  supprimer avec succes']);
           } else {
-              return response()->json(['message' => 'Resultat examen not found'], 404);
+              return response()->json(['message' => 'Resultat examen existe pas'], 404);
           }
       }
   }

@@ -39,9 +39,9 @@ class MedecinController extends Controller
             $medecin->compte_banquaire_med = $request->compte_banquaire_med;
 
             $medecin->save();
-            return response()->json(['message' => 'Medecin updated successfully']);
+            return response()->json(['message' => 'Medecin a ete mis a jour avec succes']);
         } else {
-            return response()->json(['message' => 'Medecin not found'], 404);
+            return response()->json(['message' => 'Medecin existe pas'], 404);
         }
     }
 
@@ -50,9 +50,9 @@ class MedecinController extends Controller
         $medecin = Medecin::find($id);
         if ($medecin) {
             $medecin->delete();
-            return response()->json(['message' => 'Medecin deleted successfully']);
+            return response()->json(['message' => 'Medecin a ete mis a supprimer avec succes']);
         } else {
-            return response()->json(['message' => 'Medecin not found'], 404);
+            return response()->json(['message' => 'Medecin existe pas'], 404);
         }
     }
 

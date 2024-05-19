@@ -37,9 +37,9 @@ class LitController extends Controller
             $lit->id_chambre = $request->id_chambre;
 
             $lit->save();
-            return response()->json(['message' => 'Lit updated successfully']);
+            return response()->json(['message' => 'Lit a ete mis a jour avec succes']);
         } else {
-            return response()->json(['message' => 'Lit not found'], 404);
+            return response()->json(['message' => 'Lit existe pas'], 404);
         }
     }
 
@@ -48,9 +48,9 @@ class LitController extends Controller
         $lit = Lit::find($id);
         if ($lit) {
             $lit->delete();
-            return response()->json(['message' => 'Lit deleted successfully']);
+            return response()->json(['message' => 'Lit a ete supprimer avec succes']);
         } else {
-            return response()->json(['message' => 'Lit not found'], 404);
+            return response()->json(['message' => 'Lit existe pas'], 404);
         }
     }
 
