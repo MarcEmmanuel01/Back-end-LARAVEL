@@ -25,7 +25,7 @@ class ConsultationController extends Controller
 
        $consultation -> save ();
       }
-
+    // Ajout de la nouvelle méthode pour récupérer les informations d'une consultation par son ID
       public function recup_info_consultation($id)
       {
           $consultation = Consultation::find($id);

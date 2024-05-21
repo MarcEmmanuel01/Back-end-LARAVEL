@@ -22,7 +22,7 @@ class ResultatExamenController extends Controller
 
        $resultatexamen -> save ();
       }
-
+      // Ajout de la nouvelle méthode pour récupérer les informations d'un resltat d'examen par son ID
       public function recup_info_resultatexamen($id)
       {
           $resultatexamen = Resultat_examen::find($id);
@@ -40,6 +40,7 @@ class ResultatExamenController extends Controller
           }
       }
 
+        // Mettre à jour un resultat d'examen
       public function updateresultatexamen(Request $request, $id)
       {
           $resultatexamen = Resultat_examen::find($id);
@@ -57,6 +58,7 @@ class ResultatExamenController extends Controller
           }
       }
 
+      // Supprimer un resultat d'examen
       public function deleteresultatexamen($id)
       {
           $resultatexamen = Resultat_examen::find($id);

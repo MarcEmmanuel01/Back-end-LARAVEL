@@ -21,7 +21,7 @@ class HospitalisationController extends Controller
 
        $hospitalisation -> save ();
       }
-
+       // Ajout de la nouvelle méthode pour récupérer les informations d'une hospitalisation par son ID
       public function recup_info_hospitalisation($id)
       {
           $hospitalisation = Hospitalisation::find($id);
@@ -39,6 +39,7 @@ class HospitalisationController extends Controller
           }
       }
 
+        // Mettre à jour une hospitalisation
       public function updatehospitalisation(Request $request, $id)
       {
           $hospitalisation = Hospitalisation::find($id);
@@ -54,7 +55,7 @@ class HospitalisationController extends Controller
               return response()->json(['message' => 'Hospitalisation existe pas'], 404);
           }
       }
-
+     // Supprimer une hospitalisation
       public function deletehospitalisation($id)
       {
           $hospitalisation = Hospitalisation::find($id);

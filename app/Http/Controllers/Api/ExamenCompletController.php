@@ -19,7 +19,7 @@ class ExamenCompletController extends Controller
     }
 
     // Mettre à jour un examen complet
-    public function updatecompletexamen(Request $request, $id)
+    public function updateexamencomplet(Request $request, $id)
     {
         $examen_complet = Examen_complet::find($id);
 
@@ -36,7 +36,7 @@ class ExamenCompletController extends Controller
     }
 
     // Supprimer un examen complet
-    public function deletecompletexamen($id)
+    public function deleteexamencomplet($id)
     {
         $examen_complet = Examen_complet::find($id);
 
@@ -48,6 +48,18 @@ class ExamenCompletController extends Controller
 
         return response()->json(['message' => 'Examen complet supprimé avec succès'], 200);
     }
+
+    // Ajout de la nouvelle méthode pour récupérer les informations d'un examen complet par son ID
+    public function recup_info_examencomplet($id)
+    {
+        $examen_complet = Examen_complet::find($id);
+        if ($examen_complet) {
+            return response()->json($examen_complet);
+        } else {
+            return response()->json(['message' => 'Examen complet non trouvé'], 404);
+        }
+    }
+
 }
 
 

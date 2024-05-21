@@ -20,7 +20,7 @@ class TraitementController extends Controller
 
        $traitement -> save ();
       }
-
+      // Ajout de la nouvelle méthode pour récupérer les informations d'un traitement par son ID
       public function recup_info_traitement($id)
       {
           $traitement = Traitement::find($id);
@@ -37,6 +37,7 @@ class TraitementController extends Controller
           }
       }
 
+        // Mettre à jour un traitement
       public function updatetraitement(Request $request, $id)
       {
           $traitement = Traitement::find($id);
@@ -52,6 +53,7 @@ class TraitementController extends Controller
           }
       }
 
+      // Supprimer un traitement
       public function deletetraitement($id)
       {
           $traitement = Traitement::find($id);

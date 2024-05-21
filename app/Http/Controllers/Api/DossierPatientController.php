@@ -64,5 +64,17 @@ class DossierPatientController extends Controller
 
        return response()->json(['message' => 'Patient supprimé avec succès'], 200);
    }
+
+   // Ajout de la nouvelle méthode pour récupérer les informations d'un patient par son ID
+   public function recup_info_patient($id)
+   {
+       $dossier_patient = Dossier_patient::find($id);
+       if ($dossier_patient) {
+           return response()->json($dossier_patient);
+       } else {
+           return response()->json(['message' => 'Patient non trouvé'], 404);
+       }
+   }
+
 }
 

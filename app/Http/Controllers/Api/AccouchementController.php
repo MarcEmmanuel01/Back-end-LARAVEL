@@ -21,7 +21,7 @@ class AccouchementController extends Controller
 
        $accouchement -> save ();
       }
-
+    // Ajout de la nouvelle méthode pour récupérer les informations d'un accouchement par son ID
       public function recup_info_accou($id)
     {
         $accouchement = Accouchement::find($id);

@@ -24,6 +24,7 @@ class TechnicienController extends Controller
        $technicien -> save ();
       }
 
+        // Mettre à jour un technicien
       public function updatetechnicien(Request $request, $id)
       {
           $technicien = Technicien::find($id);
@@ -44,6 +45,7 @@ class TechnicienController extends Controller
           }
       }
 
+      // Supprimer un technicien
       public function deletetechnicien($id)
       {
           $technicien = Technicien::find($id);
@@ -54,6 +56,17 @@ class TechnicienController extends Controller
               return response()->json(['message' => 'Technicien existe pas'], 404);
           }
       }
+
+      // Ajout de la nouvelle méthode pour récupérer les informations d'un technicien par son ID
+    public function recup_info_technicien($id)
+    {
+        $technicien = Technicien::find($id);
+        if ($technicien) {
+            return response()->json($technicien);
+        } else {
+            return response()->json(['message' => 'Technicien existe pas'], 404);
+        }
+    }
 
 }
 

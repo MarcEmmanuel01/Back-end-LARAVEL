@@ -25,6 +25,7 @@ class MedecinController extends Controller
        $medecin -> save ();
       }
 
+        // Mettre à jour un medecin
       public function updatemedecin(Request $request, $id)
     {
         $medecin = Medecin::find($id);
@@ -44,13 +45,24 @@ class MedecinController extends Controller
             return response()->json(['message' => 'Medecin existe pas'], 404);
         }
     }
-
+    // Supprimer un medecin
     public function deletemedecin($id)
     {
         $medecin = Medecin::find($id);
         if ($medecin) {
             $medecin->delete();
             return response()->json(['message' => 'Medecin a ete mis a supprimer avec succes']);
+        } else {
+            return response()->json(['message' => 'Medecin existe pas'], 404);
+        }
+    }
+
+    // Ajout de la nouvelle méthode pour récupérer les informations d'un médecin par son ID
+    public function recup_info_medecin($id)
+    {
+        $medecin = Medecin::find($id);
+        if ($medecin) {
+            return response()->json($medecin);
         } else {
             return response()->json(['message' => 'Medecin existe pas'], 404);
         }
