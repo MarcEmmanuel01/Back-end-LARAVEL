@@ -21,21 +21,32 @@ class AccouchementController extends Controller
 
        $accouchement -> save ();
       }
-    // Ajout de la nouvelle méthode pour récupérer les informations d'un accouchement par son ID
-      public function recup_info_accou($id)
+
+    // Méthode pour récupérer les informations d'un accouchement ou de tous les accouchements
+    public function recup_info_accou($id = null)
     {
-        $accouchement = Accouchement::find($id);
-        if ($accouchement) {
-            $accouchementDetails = DB::table('accouchements')
+        if ($id) {
+            $accouchement = Accouchement::find($id);
+            if ($accouchement) {
+                $accouchementDetails = DB::table('accouchements')
+                    ->join('techniciens', 'accouchements.id_technicien', '=', 'techniciens.id')
+                    ->join('consultations', 'accouchements.id_consultation', '=', 'consultations.id')
+                    ->where('accouchements.id', $id)
+                    ->select('accouchements.*', 'techniciens.*', 'consultations.*')
+                    ->first();
+
+                return response()->json($accouchementDetails);
+            } else {
+                return response()->json(['message' => 'Accouchement n\'existe pas'], 404);
+            }
+        } else {
+            $accouchements = DB::table('accouchements')
                 ->join('techniciens', 'accouchements.id_technicien', '=', 'techniciens.id')
                 ->join('consultations', 'accouchements.id_consultation', '=', 'consultations.id')
-                ->where('accouchements.id', $id)
                 ->select('accouchements.*', 'techniciens.*', 'consultations.*')
-                ->first();
+                ->get();
 
-            return response()->json($accouchementDetails);
-        } else {
-            return response()->json(['message' => 'Accouchement existe pas'], 404);
+            return response()->json($accouchements);
         }
     }
 

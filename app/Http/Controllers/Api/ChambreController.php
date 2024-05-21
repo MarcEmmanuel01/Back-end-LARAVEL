@@ -48,14 +48,19 @@ class ChambreController extends Controller
         return response()->json(['message' => 'Chambre supprimée avec succès'], 200);
     }
 
-    // Ajout de la nouvelle méthode pour récupérer les informations d'une chambre par son ID
-    public function recup_info_chambre($id)
+    // Méthode pour récupérer les informations d'une chambre ou de toutes les chambres
+    public function recup_info_chambre($id = null)
     {
-        $chambre = Chambre::find($id);
-        if ($chambre) {
-            return response()->json($chambre);
+        if ($id) {
+            $chambre = Chambre::find($id);
+            if ($chambre) {
+                return response()->json($chambre);
+            } else {
+                return response()->json(['message' => 'Chambre non trouvée'], 404);
+            }
         } else {
-            return response()->json(['message' => 'Chambre non trouvée'], 404);
+            $chambres = Chambre::all();
+            return response()->json($chambres);
         }
     }
 

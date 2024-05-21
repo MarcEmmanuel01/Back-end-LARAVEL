@@ -25,23 +25,33 @@ class ConsultationController extends Controller
 
        $consultation -> save ();
       }
-    // Ajout de la nouvelle méthode pour récupérer les informations d'une consultation par son ID
-      public function recup_info_consultation($id)
-      {
-          $consultation = Consultation::find($id);
-          if ($consultation) {
-              $consultationDetails = DB::table('consultations')
-                  ->join('dossier_patients', 'consultations.id_dossier_patient', '=', 'dossier_patients.id')
-                  ->join('medecins', 'consultations.id_medecin', '=', 'medecins.id')
-                  ->where('consultations.id', $id)
-                  ->select('consultations.*', 'dossier_patients.*', 'medecins.*')
-                  ->first();
+    // Récupérer les informations de toutes les consultations ou d'une consultation spécifique par ID
+    public function recup_info_consultation(Request $request, $id = null)
+    {
+        if ($id) {
+            $consultation = Consultation::find($id);
+            if ($consultation) {
+                $consultationDetails = DB::table('consultations')
+                    ->join('dossier_patients', 'consultations.id_dossier_patient', '=', 'dossier_patients.id')
+                    ->join('medecins', 'consultations.id_medecin', '=', 'medecins.id')
+                    ->where('consultations.id', $id)
+                    ->select('consultations.*', 'dossier_patients.*', 'medecins.*')
+                    ->first();
 
-              return response()->json($consultationDetails);
-          } else {
-              return response()->json(['message' => 'Consultation existe pas'], 404);
-          }
-      }
+                return response()->json($consultationDetails);
+            } else {
+                return response()->json(['message' => 'Consultation n\'existe pas'], 404);
+            }
+        } else {
+            $consultations = DB::table('consultations')
+                ->join('dossier_patients', 'consultations.id_dossier_patient', '=', 'dossier_patients.id')
+                ->join('medecins', 'consultations.id_medecin', '=', 'medecins.id')
+                ->select('consultations.*', 'dossier_patients.*', 'medecins.*')
+                ->get();
+
+            return response()->json($consultations);
+        }
+    }
 
     // Mettre à jour une consultation
     public function updateconsultation(Request $request, $id)

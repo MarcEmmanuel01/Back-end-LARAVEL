@@ -50,16 +50,20 @@ class ExamenCompletController extends Controller
     }
 
     // Ajout de la nouvelle méthode pour récupérer les informations d'un examen complet par son ID
-    public function recup_info_examencomplet($id)
+    public function recup_info_examencomplet($id = null)
     {
-        $examen_complet = Examen_complet::find($id);
-        if ($examen_complet) {
-            return response()->json($examen_complet);
+        if ($id) {
+            $examen_complet = Examen_complet::find($id);
+            if ($examen_complet) {
+                return response()->json($examen_complet);
+            } else {
+                return response()->json(['message' => 'Examen complet non trouvé'], 404);
+            }
         } else {
-            return response()->json(['message' => 'Examen complet non trouvé'], 404);
+            $examens_complets = Examen_complet::all();
+            return response()->json($examens_complets);
         }
     }
-
 }
 
 

@@ -57,16 +57,19 @@ class TechnicienController extends Controller
           }
       }
 
-      // Ajout de la nouvelle méthode pour récupérer les informations d'un technicien par son ID
-    public function recup_info_technicien($id)
+      // Méthode pour récupérer les informations d'un technicien ou de tous les techniciens
+    public function recup_info_technicien($id = null)
     {
-        $technicien = Technicien::find($id);
-        if ($technicien) {
-            return response()->json($technicien);
+        if ($id) {
+            $technicien = Technicien::find($id);
+            if ($technicien) {
+                return response()->json($technicien);
+            } else {
+                return response()->json(['message' => 'Technicien n\'existe pas'], 404);
+            }
         } else {
-            return response()->json(['message' => 'Technicien existe pas'], 404);
+            $techniciens = Technicien::all();
+            return response()->json($techniciens);
         }
     }
-
 }
-

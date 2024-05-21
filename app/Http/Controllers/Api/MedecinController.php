@@ -57,16 +57,20 @@ class MedecinController extends Controller
         }
     }
 
-    // Ajout de la nouvelle méthode pour récupérer les informations d'un médecin par son ID
-    public function recup_info_medecin($id)
+    // Ajout de la nouvelle méthode pour récupérer les informations d'un médecin ou de tous les médecins
+    public function recup_info_medecin($id = null)
     {
-        $medecin = Medecin::find($id);
-        if ($medecin) {
-            return response()->json($medecin);
+        if ($id) {
+            $medecin = Medecin::find($id);
+            if ($medecin) {
+                return response()->json($medecin);
+            } else {
+                return response()->json(['message' => 'Médecin n\'existe pas'], 404);
+            }
         } else {
-            return response()->json(['message' => 'Medecin existe pas'], 404);
+            $medecins = Medecin::all();
+            return response()->json($medecins);
         }
     }
-
 }
 

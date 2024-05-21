@@ -54,18 +54,22 @@ class UserController extends Controller
         return response()->json(['message' => 'Utilisateur supprimé avec succès'], 200);
     }
 
-        // Ajout de la nouvelle méthode pour récupérer les informations d'un utilisateur par son ID
-        public function recup_info_user($id)
-        {
+        // Méthode pour récupérer les informations d'un utilisateur ou de tous les utilisateurs
+    public function recup_info_user($id = null)
+    {
+        if ($id) {
             $user = User::find($id);
             if ($user) {
                 return response()->json($user);
             } else {
                 return response()->json(['message' => 'Utilisateur non trouvé'], 404);
             }
+        } else {
+            $users = User::all();
+            return response()->json($users);
         }
+    }
 }
-
 
 
 

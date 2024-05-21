@@ -38,7 +38,7 @@ Route::put('/mettreajourpatient/{id}', [DossierPatientController::class, 'update
 Route::delete('/supprimerpatient/{id}', [DossierPatientController::class, 'deletepatient']);
 
 // Récupérer les informations d'un patient
-Route::get('/recuperationpatient/{id}', [DossierPatientController::class, 'recup_info_patient']);
+Route::get('/recuperationpatient/{id?}', [DossierPatientController::class, 'recup_info_patient']);
 
 
 
@@ -53,7 +53,7 @@ Route::put('/mettreajouradmin/{id}', [UserController::class, 'updateuser']);
 Route::delete('/supprimeradmin/{id}', [UserController::class, 'deleteuser']);
 
 // Récupérer les informations d'un patient
-Route::get('/recuperationadmin/{id}', [UserController::class, 'recup_info_user']);
+Route::get('/recuperationadmin/{id?}', [UserController::class, 'recup_info_user']);
 
 
 
@@ -68,7 +68,7 @@ Route::put('/mettreajourexamencomplet/{id}', [ExamenCompletController::class, 'u
 Route::delete('/supprimerexamencomplet/{id}', [ExamenCompletController::class, 'deleteexamencomplet']);
 
 // Récupérer les informations des examens complets
-Route::get('/recuperationexamencomplet/{id}', [ExamenCompletController::class, 'recup_info_examencomplet']);
+Route::get('/recuperationexamencomplet/{id?}', [ExamenCompletController::class, 'recup_info_examencomplet']);
 
 
 
@@ -83,7 +83,7 @@ Route::put('/mettreajourchambre/{id}', [ChambreController::class, 'updatechambre
 Route::delete('/supprimerchambre/{id}', [ChambreController::class, 'deletechambre']);
 
 // Récupérer les informations des chambres
-Route::get('/recuperationchambre/{id}', [ChambreController::class, 'recup_info_chambre']);
+Route::get('/recuperationchambre/{id?}', [ChambreController::class, 'recup_info_chambre']);
 
 
 
@@ -92,7 +92,7 @@ Route::get('/recuperationchambre/{id}', [ChambreController::class, 'recup_info_c
 Route::post('/informationlit', [LitController::class,'informationlit']);
 
 //Recuperation sur les informations des lits
-Route::get('/recuperationlit/{id}', [LitController::class, 'recup_info_lit']);
+Route::get('/recuperationlit/{id?}', [LitController::class, 'recup_info_lit']);
 
 // Mettre à jour un lit
 Route::put('/mettreajourlit/{id}', [LitController::class, 'updatelit']);
@@ -114,7 +114,7 @@ Route::put('/mettreajourmedecin/{id}', [MedecinController::class, 'updatemedecin
 Route::delete('/supprimermedecin/{id}', [MedecinController::class, 'deletemedecin']);
 
 // Récupérer les informations d'un medecin
-Route::get('/recuperationmedecin/{id}', [MedecinController::class, 'recup_info_medecin']);
+Route::get('/recuperationmedecin/{id?}', [MedecinController::class, 'recup_info_medecin']);
 
 
 
@@ -129,7 +129,7 @@ Route::put('/mettreajourtechnicien/{id}', [TechnicienController::class, 'updatet
 Route::delete('/supprimertechnicien/{id}', [TechnicienController::class, 'deletetechnicien']);
 
 // Récupérer les informations d'un technicien
-Route::get('/recuperationtechnicien/{id}', [TechnicienController::class, 'recup_info_technicien']);
+Route::get('/recuperationtechnicien/{id?}', [TechnicienController::class, 'recup_info_technicien']);
 
 
 
@@ -138,7 +138,7 @@ Route::get('/recuperationtechnicien/{id}', [TechnicienController::class, 'recup_
 Route::post('/enregistrerconsultation', [ConsultationController::class,'enregistrerconsultation']);
 
 // Récupérer les informations des consultations
-Route::get('/recuperationconsultation/{id}', [ConsultationController::class, 'recup_info_consultation']);
+Route::get('/recuperationconsultation/{id?}', [ConsultationController::class, 'recup_info_consultation']);
 
 // Mettre à jour une consultation
 Route::put('/mettreajourconsultation/{id}', [ConsultationController::class, 'updateconsultation']);
@@ -160,7 +160,7 @@ Route::put('/mettreajouraccouchement/{id}', [AccouchementController::class, 'upd
 Route::delete('/supprimeraccouchement/{id}', [AccouchementController::class, 'deleteaccouchement']);
 
 //Recupperation sur les informations sur l'accouchement
-Route::get('/recuperationaccouchement/{id}', [AccouchementController::class,'recup_info_accou']);
+Route::get('/recuperationaccouchement/{id?}', [AccouchementController::class,'recup_info_accou']);
 
 
 
@@ -169,7 +169,7 @@ Route::get('/recuperationaccouchement/{id}', [AccouchementController::class,'rec
 Route::post('/informationtraitement', [TraitementController::class,'informationtraitement']);
 
 // recuperation d'un traitement
-Route::get('/recuperationtraitement/{id}', [TraitementController::class, 'recup_info_traitement']);
+Route::get('/recuperationtraitement/{id?}', [TraitementController::class, 'recup_info_traitement']);
 
 // Mettre à jour un traitement
 Route::put('/mettreajourtraitement/{id}', [TraitementController::class, 'updatetraitement']);
@@ -184,7 +184,7 @@ Route::delete('/supprimertraitement/{id}', [TraitementController::class, 'delete
 Route::post('/informationhospitalisation', [HospitalisationController::class,'informationhospitalisation']);
 
 // recuperation d'une hospitalisation
-Route::get('/recuperationhospitalisation/{id}', [HospitalisationController::class, 'recup_info_hospitalisation']);
+Route::get('/recuperationhospitalisation/{id?}', [HospitalisationController::class, 'recup_info_hospitalisation']);
 
 // Mettre à jour une hospitalisation
 Route::put('/mettreajourhospitalisation/{id}', [HospitalisationController::class, 'updatehospitalisation']);
@@ -200,7 +200,7 @@ Route::delete('/supprimerhospitalisation/{id}', [HospitalisationController::clas
 Route::post('/informationresultatexamen', [ResultatExamenController::class,'informationresultatexamen']);
 
 // recuperation de resultat des examens
-Route::get('/recuperationresultatexamen/{id}', [ResultatExamenController::class, 'recup_info_resultatexamen']);
+Route::get('/recuperationresultatexamen/{id?}', [ResultatExamenController::class, 'recup_info_resultatexamen']);
 
 // Mettre à jour un résultat d'examen
 Route::put('/mettreajourresultatexamen/{id}', [ResultatExamenController::class, 'updateresultatexamen']);

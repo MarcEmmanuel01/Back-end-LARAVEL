@@ -18,14 +18,19 @@ class LitController extends Controller
      $lit -> id_chambre = $request->id_chambre;
      $lit -> save ();
     }
-    // Ajout de la nouvelle méthode pour récupérer les informations d'un lit par son ID
-    public function recup_info_lit($id)
+    // Méthode pour récupérer les informations d'un lit ou de tous les lits
+    public function recup_info_lit($id = null)
     {
-        $lit = Lit::find($id);
-        if ($lit) {
-            return response()->json($lit);
+        if ($id) {
+            $lit = Lit::find($id);
+            if ($lit) {
+                return response()->json($lit);
+            } else {
+                return response()->json(['message' => 'Lit n\'existe pas'], 404);
+            }
         } else {
-            return response()->json(['message' => 'Lit existe pas'], 404);
+            $lits = Lit::all();
+            return response()->json($lits);
         }
     }
 
