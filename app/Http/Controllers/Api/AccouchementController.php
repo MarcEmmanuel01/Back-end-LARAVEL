@@ -24,31 +24,34 @@ class AccouchementController extends Controller
 
     // Méthode pour récupérer les informations d'un accouchement ou de tous les accouchements
     public function recup_info_accou($id = null)
-    {
-        if ($id) {
-            $accouchement = Accouchement::find($id);
-            if ($accouchement) {
-                $accouchementDetails = DB::table('accouchements')
-                    ->join('techniciens', 'accouchements.id_technicien', '=', 'techniciens.id')
-                    ->join('consultations', 'accouchements.id_consultation', '=', 'consultations.id')
-                    ->where('accouchements.id', $id)
-                    ->select('accouchements.*', 'techniciens.*', 'consultations.*')
-                    ->first();
-
-                return response()->json($accouchementDetails);
-            } else {
-                return response()->json(['message' => 'Accouchement n\'existe pas'], 404);
-            }
-        } else {
-            $accouchements = DB::table('accouchements')
+{
+    if ($id) {
+        $accouchement = Accouchement::find($id);
+        if ($accouchement) {
+            $accouchementDetails = DB::table('accouchements')
                 ->join('techniciens', 'accouchements.id_technicien', '=', 'techniciens.id')
                 ->join('consultations', 'accouchements.id_consultation', '=', 'consultations.id')
-                ->select('accouchements.*', 'techniciens.*', 'consultations.*')
-                ->get();
+                ->where('accouchements.id', $id)
+                // Assurez-vous que l'ID de l'accouchement est renvoyé en le renommant si nécessaire
+                ->select('accouchements.id as accouchement_id', 'accouchements.*', 'techniciens.*', 'consultations.*')
+                ->first();
 
-            return response()->json($accouchements);
+            return response()->json($accouchementDetails);
+        } else {
+            return response()->json(['message' => 'Accouchement n\'existe pas'], 404);
         }
+    } else {
+        $accouchements = DB::table('accouchements')
+            ->join('techniciens', 'accouchements.id_technicien', '=', 'techniciens.id')
+            ->join('consultations', 'accouchements.id_consultation', '=', 'consultations.id')
+            // Assurez-vous que l'ID de l'accouchement est renvoyé en le renommant si nécessaire
+            ->select('accouchements.id as accouchement_id', 'accouchements.*', 'techniciens.*', 'consultations.*')
+            ->get();
+
+        return response()->json($accouchements);
     }
+}
+
 
 
     // Mettre à jour un accouchement

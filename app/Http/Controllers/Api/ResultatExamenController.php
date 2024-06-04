@@ -23,32 +23,35 @@ class ResultatExamenController extends Controller
        $resultatexamen -> save ();
       }
       // Ajout de la nouvelle méthode pour récupérer les informations d'un resultat d'examen ou de tous les resultats d'examens
-    public function recup_info_resultatexamen($id = null)
-    {
-        if ($id) {
-            $resultatexamen = Resultat_examen::find($id);
-            if ($resultatexamen) {
-                $resultatDetails = DB::table('resultat_examens')
-                    ->join('consultations', 'resultat_examens.id_consultation', '=', 'consultations.id')
-                    ->join('examens_complets', 'resultat_examens.id_examen_complet', '=', 'examens_complets.id')
-                    ->where('resultat_examens.id', $id)
-                    ->select('resultat_examens.*', 'consultations.*', 'examens_complets.*')
-                    ->first();
+      public function recup_info_resultatexamen($id = null)
+      {
+          if ($id) {
+              $resultatexamen = Resultat_examen::find($id);
+              if ($resultatexamen) {
+                  $resultatDetails = DB::table('resultat_examens')
+                      ->join('consultations', 'resultat_examens.id_consultation', '=', 'consultations.id')
+                      ->join('examens_complets', 'resultat_examens.id_examen_complet', '=', 'examens_complets.id')
+                      ->where('resultat_examens.id', $id)
+                      // Utilisez un alias pour l'ID du résultat d'examen
+                      ->select('resultat_examens.id as resultat_examen_id', 'resultat_examens.*', 'consultations.*', 'examens_complets.*')
+                      ->first();
 
-                return response()->json($resultatDetails);
-            } else {
-                return response()->json(['message' => 'Resultat examen non trouvé'], 404);
-            }
-        } else {
-            $resultatExamens = DB::table('resultat_examens')
-                ->join('consultations', 'resultat_examens.id_consultation', '=', 'consultations.id')
-                ->join('examens_complets', 'resultat_examens.id_examen_complet', '=', 'examens_complets.id')
-                ->select('resultat_examens.*', 'consultations.*', 'examens_complets.*')
-                ->get();
+                  return response()->json($resultatDetails);
+              } else {
+                  return response()->json(['message' => 'Resultat examen non trouvé'], 404);
+              }
+          } else {
+              $resultatExamens = DB::table('resultat_examens')
+                  ->join('consultations', 'resultat_examens.id_consultation', '=', 'consultations.id')
+                  ->join('examens_complets', 'resultat_examens.id_examen_complet', '=', 'examens_complets.id')
+                  // Utilisez un alias pour l'ID du résultat d'examen
+                  ->select('resultat_examens.id as resultat_examen_id', 'resultat_examens.*', 'consultations.*', 'examens_complets.*')
+                  ->get();
 
-            return response()->json($resultatExamens);
-        }
-    }
+              return response()->json($resultatExamens);
+          }
+      }
+
 
 
         // Mettre à jour un resultat d'examen

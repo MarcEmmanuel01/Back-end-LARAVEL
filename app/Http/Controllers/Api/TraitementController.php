@@ -21,30 +21,32 @@ class TraitementController extends Controller
        $traitement -> save ();
       }
       // Méthode pour récupérer les informations d'un traitement ou de tous les traitements
-    public function recup_info_traitement($id = null)
-    {
-        if ($id) {
-            $traitement = Traitement::find($id);
-            if ($traitement) {
-                $traitementDetails = DB::table('traitements')
-                    ->join('consultations', 'traitements.id_consultation', '=', 'consultations.id')
-                    ->where('traitements.id', $id)
-                    ->select('traitements.*', 'consultations.*')
-                    ->first();
+      public function recup_info_traitement($id = null)
+      {
+          if ($id) {
+              $traitement = Traitement::find($id);
+              if ($traitement) {
+                  $traitementDetails = DB::table('traitements')
+                      ->join('consultations', 'traitements.id_consultation', '=', 'consultations.id')
+                      ->where('traitements.id', $id)
+                      // Utilisez un alias pour l'ID de traitement
+                      ->select('traitements.id as traitement_id', 'traitements.*', 'consultations.*')
+                      ->first();
 
-                return response()->json($traitementDetails);
-            } else {
-                return response()->json(['message' => 'Traitement non trouvé'], 404);
-            }
-        } else {
-            $traitements = DB::table('traitements')
-                ->join('consultations', 'traitements.id_consultation', '=', 'consultations.id')
-                ->select('traitements.*', 'consultations.*')
-                ->get();
+                  return response()->json($traitementDetails);
+              } else {
+                  return response()->json(['message' => 'Traitement non trouvé'], 404);
+              }
+          } else {
+              $traitements = DB::table('traitements')
+                  ->join('consultations', 'traitements.id_consultation', '=', 'consultations.id')
+                  // Utilisez un alias pour l'ID de traitement
+                  ->select('traitements.id as traitement_id', 'traitements.*', 'consultations.*')
+                  ->get();
 
-            return response()->json($traitements);
-        }
-    }
+              return response()->json($traitements);
+          }
+      }
 
         // Mettre à jour un traitement
       public function updatetraitement(Request $request, $id)

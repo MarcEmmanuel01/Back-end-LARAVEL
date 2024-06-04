@@ -35,7 +35,8 @@ class ConsultationController extends Controller
                     ->join('dossier_patients', 'consultations.id_dossier_patient', '=', 'dossier_patients.id')
                     ->join('medecins', 'consultations.id_medecin', '=', 'medecins.id')
                     ->where('consultations.id', $id)
-                    ->select('consultations.*', 'dossier_patients.*', 'medecins.*')
+                    // Utilisez un alias pour l'ID de la consultation pour éviter des conflits
+                    ->select('consultations.id as consultation_id', 'consultations.*', 'dossier_patients.*', 'medecins.*')
                     ->first();
 
                 return response()->json($consultationDetails);
@@ -46,12 +47,14 @@ class ConsultationController extends Controller
             $consultations = DB::table('consultations')
                 ->join('dossier_patients', 'consultations.id_dossier_patient', '=', 'dossier_patients.id')
                 ->join('medecins', 'consultations.id_medecin', '=', 'medecins.id')
-                ->select('consultations.*', 'dossier_patients.*', 'medecins.*')
+                // Utilisez un alias pour l'ID de la consultation pour éviter des conflits
+                ->select('consultations.id as consultation_id', 'consultations.*', 'dossier_patients.*', 'medecins.*')
                 ->get();
 
             return response()->json($consultations);
         }
     }
+
 
     // Mettre à jour une consultation
     public function updateconsultation(Request $request, $id)

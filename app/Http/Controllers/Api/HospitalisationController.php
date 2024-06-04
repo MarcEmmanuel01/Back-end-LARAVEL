@@ -22,32 +22,35 @@ class HospitalisationController extends Controller
        $hospitalisation -> save ();
       }
       // Récupérer les informations de toutes les hospitalisations ou d'une hospitalisation spécifique par ID
-    public function recup_info_hospitalisation($id = null)
-    {
-        if ($id) {
-            $hospitalisation = Hospitalisation::find($id);
-            if ($hospitalisation) {
-                $hospitalisationDetails = DB::table('hospitalisations')
-                    ->join('lits', 'hospitalisations.id_lit', '=', 'lits.id')
-                    ->join('consultations', 'hospitalisations.id_consultation', '=', 'consultations.id')
-                    ->where('hospitalisations.id', $id)
-                    ->select('hospitalisations.*', 'lits.*', 'consultations.*')
-                    ->first();
+      public function recup_info_hospitalisation($id = null)
+      {
+          if ($id) {
+              $hospitalisation = Hospitalisation::find($id);
+              if ($hospitalisation) {
+                  $hospitalisationDetails = DB::table('hospitalisations')
+                      ->join('lits', 'hospitalisations.id_lit', '=', 'lits.id')
+                      ->join('consultations', 'hospitalisations.id_consultation', '=', 'consultations.id')
+                      ->where('hospitalisations.id', $id)
+                      // Utilisez un alias pour l'ID de l'hospitalisation
+                      ->select('hospitalisations.id as hospitalisation_id', 'hospitalisations.*', 'lits.*', 'consultations.*')
+                      ->first();
 
-                return response()->json($hospitalisationDetails);
-            } else {
-                return response()->json(['message' => 'Hospitalisation non trouvée'], 404);
-            }
-        } else {
-            $hospitalisations = DB::table('hospitalisations')
-                ->join('lits', 'hospitalisations.id_lit', '=', 'lits.id')
-                ->join('consultations', 'hospitalisations.id_consultation', '=', 'consultations.id')
-                ->select('hospitalisations.*', 'lits.*', 'consultations.*')
-                ->get();
+                  return response()->json($hospitalisationDetails);
+              } else {
+                  return response()->json(['message' => 'Hospitalisation non trouvée'], 404);
+              }
+          } else {
+              $hospitalisations = DB::table('hospitalisations')
+                  ->join('lits', 'hospitalisations.id_lit', '=', 'lits.id')
+                  ->join('consultations', 'hospitalisations.id_consultation', '=', 'consultations.id')
+                  // Utilisez un alias pour l'ID de l'hospitalisation
+                  ->select('hospitalisations.id as hospitalisation_id', 'hospitalisations.*', 'lits.*', 'consultations.*')
+                  ->get();
 
-            return response()->json($hospitalisations);
-        }
-    }
+              return response()->json($hospitalisations);
+          }
+      }
+
 
 
         // Mettre à jour une hospitalisation
