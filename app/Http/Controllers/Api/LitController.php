@@ -35,19 +35,25 @@ class LitController extends Controller
     }
 
       // Mettre à jour un lit
-    public function updatelit(Request $request, $id)
-    {
-        $lit = Lit::find($id);
-        if ($lit) {
-            $lit->description_lit = $request->description_lit;
-            $lit->id_chambre = $request->id_chambre;
+      public function updatelit(Request $request, $id)
+      {
+          $lit = Lit::find($id);
+          if ($lit) {
+              // Mettre à jour conditionnellement chaque champ
+              if ($request->has('description_lit')) {
+                  $lit->description_lit = $request->description_lit;
+              }
+              if ($request->has('id_chambre')) {
+                  $lit->id_chambre = $request->id_chambre;
+              }
 
-            $lit->save();
-            return response()->json(['message' => 'Lit a ete mis a jour avec succes']);
-        } else {
-            return response()->json(['message' => 'Lit existe pas'], 404);
-        }
-    }
+              $lit->save();
+              return response()->json(['message' => 'Lit a été mis à jour avec succès']);
+          } else {
+              return response()->json(['message' => 'Lit existe pas'], 404);
+          }
+      }
+
     // Supprimer un lit
     public function deletelit($id)
     {

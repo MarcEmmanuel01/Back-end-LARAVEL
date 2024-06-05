@@ -26,25 +26,34 @@ class MedecinController extends Controller
       }
 
         // Mettre à jour un medecin
-      public function updatemedecin(Request $request, $id)
-    {
-        $medecin = Medecin::find($id);
-        if ($medecin) {
-            $medecin->grade_med = $request->grade_med;
-            $medecin->specialite_med = $request->specialite_med;
-            $medecin->nom_med = $request->nom_med;
-            $medecin->prenom_med = $request->prenom_med;
-            $medecin->tel_med = $request->tel_med;
-            $medecin->email_med = $request->email_med;
-            $medecin->cni_med = $request->cni_med;
-            $medecin->compte_banquaire_med = $request->compte_banquaire_med;
+        public function updatemedecin(Request $request, $id)
+        {
+            $medecin = Medecin::find($id);
+            if ($medecin) {
+                // Mettre à jour conditionnellement chaque champ
+                $fieldsToUpdate = [
+                    'grade_med',
+                    'specialite_med',
+                    'nom_med',
+                    'prenom_med',
+                    'tel_med',
+                    'email_med',
+                    'cni_med',
+                    'compte_banquaire_med'
+                ];
+                foreach ($fieldsToUpdate as $field) {
+                    if ($request->has($field)) {
+                        $medecin->$field = $request->$field;
+                    }
+                }
 
-            $medecin->save();
-            return response()->json(['message' => 'Medecin a ete mis a jour avec succes']);
-        } else {
-            return response()->json(['message' => 'Medecin existe pas'], 404);
+                $medecin->save();
+                return response()->json(['message' => 'Medecin a été mis à jour avec succès']);
+            } else {
+                return response()->json(['message' => 'Medecin existe pas'], 404);
+            }
         }
-    }
+
     // Supprimer un medecin
     public function deletemedecin($id)
     {

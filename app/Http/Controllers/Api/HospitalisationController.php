@@ -54,21 +54,30 @@ class HospitalisationController extends Controller
 
 
         // Mettre à jour une hospitalisation
-      public function updatehospitalisation(Request $request, $id)
-      {
-          $hospitalisation = Hospitalisation::find($id);
-          if ($hospitalisation) {
-              $hospitalisation->date_debut = $request->date_debut;
-              $hospitalisation->date_fin = $request->date_fin;
-              $hospitalisation->id_lit = $request->id_lit;
-              $hospitalisation->id_consultation = $request->id_consultation;
+        public function updatehospitalisation(Request $request, $id)
+        {
+            $hospitalisation = Hospitalisation::find($id);
+            if ($hospitalisation) {
+                // Mettre à jour conditionnellement chaque champ
+                $fieldsToUpdate = [
+                    'date_debut',
+                    'date_fin',
+                    'id_lit',
+                    'id_consultation'
+                ];
+                foreach ($fieldsToUpdate as $field) {
+                    if ($request->has($field)) {
+                        $hospitalisation->$field = $request->$field;
+                    }
+                }
 
-              $hospitalisation->save();
-              return response()->json(['message' => 'Hospitalisation a ete mis a joue avec succes']);
-          } else {
-              return response()->json(['message' => 'Hospitalisation existe pas'], 404);
-          }
-      }
+                $hospitalisation->save();
+                return response()->json(['message' => 'Hospitalisation a été mise à jour avec succès']);
+            } else {
+                return response()->json(['message' => 'Hospitalisation existe pas'], 404);
+            }
+        }
+
      // Supprimer une hospitalisation
       public function deletehospitalisation($id)
       {

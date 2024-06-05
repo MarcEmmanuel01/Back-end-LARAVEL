@@ -26,8 +26,16 @@ class ChambreController extends Controller
             return response()->json(['message' => 'Chambre non trouvée'], 404);
         }
 
-        $chambre->description_chambre = $request->input('description_chambre');
-        // Ajouter d'autres champs si nécessaire
+        // Mettre à jour conditionnellement chaque champ
+        $fieldsToUpdate = [
+            'description_chambre',
+            // Ajoutez d'autres noms de champs ici si nécessaire
+        ];
+        foreach ($fieldsToUpdate as $field) {
+            if ($request->has($field)) {
+                $chambre->$field = $request->input($field);
+            }
+        }
 
         $chambre->save();
 

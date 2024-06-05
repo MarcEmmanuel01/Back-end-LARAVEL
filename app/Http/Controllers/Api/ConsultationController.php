@@ -58,26 +58,27 @@ class ConsultationController extends Controller
 
     // Mettre à jour une consultation
     public function updateconsultation(Request $request, $id)
-    {
-        $consultation = Consultation::find($id);
+{
+    $consultation = Consultation::find($id);
 
-        if (!$consultation) {
-            return response()->json(['message' => 'Consultation non trouvée'], 404);
-        }
-
-        $consultation->date_cons = $request->input('date_cons');
-        $consultation->constantes = $request->input('constantes');
-        $consultation->diagnostiques = $request->input('diagnostiques');
-        $consultation->pathologie = $request->input('pathologie');
-        $consultation->prescription = $request->input('prescription');
-        $consultation->date_rdv = $request->input('date_rdv');
-        $consultation->id_dossier_patient = $request->input('id_dossier_patient');
-        $consultation->id_medecin = $request->input('id_medecin');
-
-        $consultation->save();
-
-        return response()->json(['message' => 'Consultation mise à jour avec succès'], 200);
+    if (!$consultation) {
+        return response()->json(['message' => 'Consultation non trouvée'], 404);
     }
+
+    // Mettre à jour seulement les champs fournis dans la requête
+    $consultation->update($request->only([
+        'date_cons',
+        'constantes',
+        'diagnostiques',
+        'pathologie',
+        'prescription',
+        'date_rdv',
+        'id_dossier_patient',
+        'id_medecin'
+    ]));
+
+    return response()->json(['message' => 'Consultation mise à jour avec succès'], 200);
+}
 
     // Supprimer une consultation
     public function deleteconsultation($id)

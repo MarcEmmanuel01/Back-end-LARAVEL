@@ -56,22 +56,31 @@ class AccouchementController extends Controller
 
     // Mettre à jour un accouchement
     public function updateaccouchement(Request $request, $id)
-    {
-        $accouchement = Accouchement::find($id);
+{
+    $accouchement = Accouchement::find($id);
 
-        if (!$accouchement) {
-            return response()->json(['message' => 'Accouchement existe pas'], 404);
-        }
-
-        $accouchement->date_accou = $request->date_accou;
-        $accouchement->description_accou = $request->description_accou;
-        $accouchement->id_technicien = $request->id_technicien;
-        $accouchement->id_consultation = $request->id_consultation;
-
-        $accouchement->save();
-
-        return response()->json(['message' => 'Accouchement a ete mis a jour avec succes'], 200);
+    if (!$accouchement) {
+        return response()->json(['message' => 'Accouchement existe pas'], 404);
     }
+
+    // Mettre à jour conditionnellement chaque champ
+    $fieldsToUpdate = [
+        'date_accou',
+        'description_accou',
+        'id_technicien',
+        'id_consultation'
+    ];
+    foreach ($fieldsToUpdate as $field) {
+        if ($request->has($field)) {
+            $accouchement->$field = $request->$field;
+        }
+    }
+
+    $accouchement->save();
+
+    return response()->json(['message' => 'Accouchement a ete mis a jour avec succes'], 200);
+}
+
 
     // Supprimer un accouchement
     public function deleteaccouchement($id)

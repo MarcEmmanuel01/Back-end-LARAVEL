@@ -55,22 +55,30 @@ class ResultatExamenController extends Controller
 
 
         // Mettre à jour un resultat d'examen
-      public function updateresultatexamen(Request $request, $id)
-      {
-          $resultatexamen = Resultat_examen::find($id);
-          if ($resultatexamen) {
-              $resultatexamen->objet = $request->objet;
-              $resultatexamen->interpretation = $request->interpretation;
-              $resultatexamen->date_examen = $request->date_examen;
-              $resultatexamen->id_consultation = $request->id_consultation;
-              $resultatexamen->id_examen_complet = $request->id_examen_complet;
+        public function updateresultatexamen(Request $request, $id)
+        {
+            $resultatexamen = Resultat_examen::find($id);
+            if ($resultatexamen) {
+                // Mettre à jour conditionnellement chaque champ
+                $fieldsToUpdate = [
+                    'objet',
+                    'interpretation',
+                    'date_examen',
+                    'id_consultation',
+                    'id_examen_complet'
+                ];
+                foreach ($fieldsToUpdate as $field) {
+                    if ($request->has($field)) {
+                        $resultatexamen->$field = $request->$field;
+                    }
+                }
 
-              $resultatexamen->save();
-              return response()->json(['message' => 'Resultat examen a ete mis a jour avec succes']);
-          } else {
-              return response()->json(['message' => 'Resultat examen existe pas'], 404);
-          }
-      }
+                $resultatexamen->save();
+                return response()->json(['message' => 'Resultat examen a été mis à jour avec succès']);
+            } else {
+                return response()->json(['message' => 'Resultat examen existe pas'], 404);
+            }
+        }
 
       // Supprimer un resultat d'examen
       public function deleteresultatexamen($id)

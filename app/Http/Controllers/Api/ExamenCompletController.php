@@ -27,8 +27,16 @@ class ExamenCompletController extends Controller
             return response()->json(['message' => 'Examen complet non trouvé'], 404);
         }
 
-        $examen_complet->libelle_exam = $request->input('libelle_exam');
-        // Ajouter d'autres champs si nécessaire
+        // Mettre à jour conditionnellement chaque champ
+        $fieldsToUpdate = [
+            'libelle_exam',
+            // Ajoutez d'autres noms de champs ici si nécessaire
+        ];
+        foreach ($fieldsToUpdate as $field) {
+            if ($request->has($field)) {
+                $examen_complet->$field = $request->input($field);
+            }
+        }
 
         $examen_complet->save();
 

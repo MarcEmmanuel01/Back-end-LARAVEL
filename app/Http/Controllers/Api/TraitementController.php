@@ -49,20 +49,29 @@ class TraitementController extends Controller
       }
 
         // Mettre à jour un traitement
-      public function updatetraitement(Request $request, $id)
-      {
-          $traitement = Traitement::find($id);
-          if ($traitement) {
-              $traitement->objet_maladie = $request->objet_maladie;
-              $traitement->observation_maladie = $request->observation_maladie;
-              $traitement->id_consultation = $request->id_consultation;
+        public function updatetraitement(Request $request, $id)
+        {
+            $traitement = Traitement::find($id);
+            if ($traitement) {
+                // Mettre à jour conditionnellement chaque champ
+                $fieldsToUpdate = [
+                    'objet_maladie',
+                    'observation_maladie',
+                    'id_consultation'
+                ];
+                foreach ($fieldsToUpdate as $field) {
+                    if ($request->has($field)) {
+                        $traitement->$field = $request->$field;
+                    }
+                }
 
-              $traitement->save();
-              return response()->json(['message' => 'Traitement a ete mis a jour avec succes']);
-          } else {
-              return response()->json(['message' => 'Traitement existe pas'], 404);
-          }
-      }
+                $traitement->save();
+                return response()->json(['message' => 'Traitement a été mis à jour avec succès']);
+            } else {
+                return response()->json(['message' => 'Traitement existe pas'], 404);
+            }
+        }
+
 
       // Supprimer un traitement
       public function deletetraitement($id)

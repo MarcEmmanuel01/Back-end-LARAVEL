@@ -25,25 +25,33 @@ class TechnicienController extends Controller
       }
 
         // Mettre à jour un technicien
-      public function updatetechnicien(Request $request, $id)
-      {
-          $technicien = Technicien::find($id);
-          if ($technicien) {
-              $technicien->grade_tech = $request->grade_tech;
-              $technicien->specialite_tech = $request->specialite_tech;
-              $technicien->nom_tech = $request->nom_tech;
-              $technicien->prenom_tech = $request->prenom_tech;
-              $technicien->tel_tech = $request->tel_tech;
-              $technicien->email_tech = $request->email_tech;
-              $technicien->cni_tech = $request->cni_tech;
-              $technicien->compte_banquaire_tech = $request->compte_banquaire_tech;
+        public function updatetechnicien(Request $request, $id)
+        {
+            $technicien = Technicien::find($id);
+            if ($technicien) {
+                // Mettre à jour conditionnellement chaque champ
+                $fieldsToUpdate = [
+                    'grade_tech',
+                    'specialite_tech',
+                    'nom_tech',
+                    'prenom_tech',
+                    'tel_tech',
+                    'email_tech',
+                    'cni_tech',
+                    'compte_banquaire_tech'
+                ];
+                foreach ($fieldsToUpdate as $field) {
+                    if ($request->has($field)) {
+                        $technicien->$field = $request->$field;
+                    }
+                }
 
-              $technicien->save();
-              return response()->json(['message' => 'Technicien a ete mis a jour avec succes']);
-          } else {
-              return response()->json(['message' => 'Technicien existe pas'], 404);
-          }
-      }
+                $technicien->save();
+                return response()->json(['message' => 'Technicien a été mis à jour avec succès']);
+            } else {
+                return response()->json(['message' => 'Technicien existe pas'], 404);
+            }
+        }
 
       // Supprimer un technicien
       public function deletetechnicien($id)
